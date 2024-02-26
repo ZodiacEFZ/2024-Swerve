@@ -17,6 +17,10 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
+public static final int ShooterLMoterID = 30;
+public static final int ShooterRMoterID = 29;
+
+
 public static final int Pegion2_ID = 0;
 public static final int LFa = 2, LFv = 3, LFe = 1, LF0 = 1444;
 public static final int RFa = 11, RFv = 10, RFe = 4, RF0 = 107;
