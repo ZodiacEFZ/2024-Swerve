@@ -7,15 +7,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.ShooterMotors;
+import frc.robot.subsystems.IntakeMotors;
 
-public class ShooterCtrl extends Command {
-  private final ShooterMotors m_ShooterMotors;
-  /** Creates a new ShooterCtrl. */
-  public ShooterCtrl(ShooterMotors shooterMotors) {
+public class IntakeCtrl extends Command {
+  private final IntakeMotors m_IntakeMotors;
+  /** Creates a new IntakeCtrl. */
+  public IntakeCtrl(IntakeMotors intakeMotors) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_ShooterMotors = shooterMotors;
-    addRequirements(shooterMotors);
+    m_IntakeMotors = intakeMotors;
+    addRequirements(intakeMotors);
   }
 
   // Called when the command is initially scheduled.
@@ -25,13 +25,13 @@ public class ShooterCtrl extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (RobotContainer.ctrlJoystick.getRawButton(1)) {
-      m_ShooterMotors.testBeg();
+    if (RobotContainer.ctrlJoystick.getRawButton(2)) {
+      m_IntakeMotors.begIntake();
     }
-    if (RobotContainer.ctrlJoystick.getRawButtonReleased(1)) {
-      m_ShooterMotors.allStop();
+    if (RobotContainer.ctrlJoystick.getRawButtonReleased(2)) {
+      m_IntakeMotors.stopIntake();
     }
-    SmartDashboard.putBoolean("ShooterButtonPressed", RobotContainer.ctrlJoystick.getRawButton(1));
+    SmartDashboard.putBoolean("IntakeButtonPressed", RobotContainer.ctrlJoystick.getRawButton(2));
   }
 
   // Called once the command ends or is interrupted.
