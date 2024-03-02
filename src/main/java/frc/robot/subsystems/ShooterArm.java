@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.util.HashMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PID;
@@ -38,6 +39,12 @@ public class ShooterArm extends SubsystemBase {
     this.RMotor = new TalonSRX(this.RMotorID);
     this.LMotor.configureSlot(PID.SlotConfiguration(this.LMotorCfg));
     this.RMotor.configureSlot(PID.SlotConfiguration(this.RMotorCfg));
+    this.LMotor.setInverted(false);
+    this.LMotor.setSensorPhase(false);
+    this.LMotor.setNeutralMode(NeutralMode.Coast);
+    this.RMotor.setInverted(false);
+    this.RMotor.setSensorPhase(false);
+    this.RMotor.setNeutralMode(NeutralMode.Coast);
     this.pos.put("test", new Pos(114, 514));
   }
 
