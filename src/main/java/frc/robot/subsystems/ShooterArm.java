@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.HashMap;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,12 +23,25 @@ public class ShooterArm extends SubsystemBase {
   private final double testLPos = 114;
   private final double testRPos = 514;
 
+  private class Pos {
+    public double L;
+    public double R;
+
+    public Pos(double L, double R) {
+      this.L = L;
+      this.R = R;
+    }
+  }
+
+  private final HashMap<String, Pos> pos = new HashMap<String, Pos>();
+
   /** Creates a new ShooterArm. */
   public ShooterArm() {
     this.LMotor = new TalonSRX(this.LMotorID);
     this.RMotor = new TalonSRX(this.RMotorID);
-    LMotor.configureSlot(PID.SlotConfiguration(this.LMotorCfg));
-    RMotor.configureSlot(PID.SlotConfiguration(this.RMotorCfg));
+    this.LMotor.configureSlot(PID.SlotConfiguration(this.LMotorCfg));
+    this.RMotor.configureSlot(PID.SlotConfiguration(this.RMotorCfg));
+    this.pos.put("test", new Pos(114, 514));
   }
 
   @Override
@@ -40,14 +55,25 @@ public class ShooterArm extends SubsystemBase {
     return this;
   }
 
-  public ShooterArm setPos(double posL, double posR) {
+  private ShooterArm setPos(double posL, double posR) {
     this.LMotor.set(ControlMode.Position, posL);
     this.RMotor.set(ControlMode.Position, posR);
     return this;
   }
 
+  public ShooterArm setPos(String pos) {
+    var got = this.pos.get(pos);
+    if (got != null) {
+      this.LMotor.set(ControlMode.Position, got.L);
+      this.RMotor.set(ControlMode.Position, got.R);
+    } else {
+      this.setStill();
+    }
+    return this;
+  }
+
   public ShooterArm setTestPos() {
-    return this.setPos(this.testLPos, this.testRPos);
+    return this.setPos("test");
   }
 
 }
