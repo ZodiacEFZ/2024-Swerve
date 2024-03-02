@@ -15,6 +15,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Util;
 
 public class SwerveModule extends SubsystemBase {
   /** Creates a new SwerveModule. */
@@ -25,30 +26,26 @@ public class SwerveModule extends SubsystemBase {
     angle = 0;
 
     // velocityMotor.getConfigurator().apply(new TalonFXConfiguration());
-    var velocityPIDConfigs = new Slot0Configs();
-    velocityPIDConfigs.kP = 0.36;
-    velocityPIDConfigs.kI = 0;
-    velocityPIDConfigs.kD = 0;
+    var velocityPIDConfigs = Util.withPID(0.36, 0, 0);
     velocityPIDConfigs.kV = 0;
     var velocityOutputConfigs = new MotorOutputConfigs();
     velocityOutputConfigs.NeutralMode = NeutralModeValue.Coast;
-    velocityOutputConfigs.Inverted = inverse ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
+    velocityOutputConfigs.Inverted = inverse ? InvertedValue.Clockwise_Positive
+        : InvertedValue.CounterClockwise_Positive;
     velocityMotor = new TalonFX(vID);
     velocityMotor.getConfigurator().apply(velocityPIDConfigs, 0.05);
     velocityMotor.getConfigurator().apply(velocityOutputConfigs);
 
     // angleMotor.getConfigurator().apply(new TalonFXConfiguration());
-    var anglePIDConfigs = new Slot0Configs();
-    anglePIDConfigs.kP = 19.22;
-    anglePIDConfigs.kI = 0;
-    anglePIDConfigs.kD = 0;
+    var anglePIDConfigs = Util.withPID(19.22, 0, 0);
     anglePIDConfigs.kV = 0;
     var angleOutputConfigs = new MotorOutputConfigs();
     angleOutputConfigs.NeutralMode = NeutralModeValue.Coast;
     angleOutputConfigs.Inverted = InvertedValue.Clockwise_Positive;
     // var EncoderConfigs = new TalonFXConfiguration();
     // EncoderConfigs.Feedback.FeedbackRemoteSensorID = eID;
-    // EncoderConfigs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+    // EncoderConfigs.Feedback.FeedbackSensorSource =
+    // FeedbackSensorSourceValue.RemoteCANcoder;
     angleMotor = new TalonFX(aID);
     angleMotor.getConfigurator().apply(anglePIDConfigs, 0.05);
     angleMotor.getConfigurator().apply(angleOutputConfigs);
@@ -113,12 +110,14 @@ public class SwerveModule extends SubsystemBase {
     double positionGoal = deltaTheta / 360 * 4096 + position;
 
     // if (Math.abs(deltaTheta) > 0.5) {
-      // angleMotor.setControl(m_angle.withVelocity(0.1 * kV * (positionGoal - position)));
+    // angleMotor.setControl(m_angle.withVelocity(0.1 * kV * (positionGoal -
+    // position)));
     // }
 
     angleMotor.set(Math.min((positionGoal - position) * 0.001, 0.3));
 
-    // angleMotor.setControl(m_angle.withPosition((positionGoal - position) * 10 / 2048));
+    // angleMotor.setControl(m_angle.withPosition((positionGoal - position) * 10 /
+    // 2048));
     // angleMotor.setControl(m_angle.withPosition(zeroPos * 10 / 2048));
 
     SmartDashboard.putNumber("posErr" + number, (positionGoal - position) * 10 / 2048);
@@ -135,4 +134,3 @@ public class SwerveModule extends SubsystemBase {
     velocityMotor.set(0);
   }
 }
-
