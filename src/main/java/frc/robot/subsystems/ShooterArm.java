@@ -20,9 +20,6 @@ public class ShooterArm extends SubsystemBase {
   private final PID.Profile LMotorCfg = new PID.Profile(0, 0, 0);;
   private final PID.Profile RMotorCfg = new PID.Profile(0, 0, 0);;
 
-  private final double testLPos = 114;
-  private final double testRPos = 514;
-
   private class Pos {
     public double L;
     public double R;
@@ -52,12 +49,6 @@ public class ShooterArm extends SubsystemBase {
   public ShooterArm setStill() {
     this.LMotor.set(ControlMode.PercentOutput, 0);
     this.RMotor.set(ControlMode.PercentOutput, 0);
-    return this;
-  }
-
-  private ShooterArm setPos(double posL, double posR) {
-    this.LMotor.set(ControlMode.Position, posL);
-    this.RMotor.set(ControlMode.Position, posR);
     return this;
   }
 
