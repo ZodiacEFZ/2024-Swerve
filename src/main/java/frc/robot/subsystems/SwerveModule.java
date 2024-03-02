@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -15,7 +14,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Util;
+import frc.robot.PID;
 
 public class SwerveModule extends SubsystemBase {
   /** Creates a new SwerveModule. */
@@ -26,7 +25,8 @@ public class SwerveModule extends SubsystemBase {
     angle = 0;
 
     // velocityMotor.getConfigurator().apply(new TalonFXConfiguration());
-    var velocityPIDConfigs = Util.withPID(0.36, 0, 0);
+    var arg_velocity = new PID.Profile(0.36, 0, 0);
+    var velocityPIDConfigs = PID.Slot0Configs(arg_velocity);
     velocityPIDConfigs.kV = 0;
     var velocityOutputConfigs = new MotorOutputConfigs();
     velocityOutputConfigs.NeutralMode = NeutralModeValue.Coast;
@@ -37,7 +37,8 @@ public class SwerveModule extends SubsystemBase {
     velocityMotor.getConfigurator().apply(velocityOutputConfigs);
 
     // angleMotor.getConfigurator().apply(new TalonFXConfiguration());
-    var anglePIDConfigs = Util.withPID(19.22, 0, 0);
+    var arg_angle = new PID.Profile(19.22, 0, 0);
+    var anglePIDConfigs = PID.Slot0Configs(arg_angle);
     anglePIDConfigs.kV = 0;
     var angleOutputConfigs = new MotorOutputConfigs();
     angleOutputConfigs.NeutralMode = NeutralModeValue.Coast;

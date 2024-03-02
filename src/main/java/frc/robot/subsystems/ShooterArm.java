@@ -6,8 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.PID;
 
 public class ShooterArm extends SubsystemBase {
   private final int LMotorID = 114;
@@ -15,6 +15,8 @@ public class ShooterArm extends SubsystemBase {
 
   private final TalonSRX LMotor;
   private final TalonSRX RMotor;
+  private final PID.Profile LMotorCfg = new PID.Profile(0, 0, 0);;
+  private final PID.Profile RMotorCfg = new PID.Profile(0, 0, 0);;
 
   private final double testLPos = 114;
   private final double testRPos = 514;
@@ -23,6 +25,8 @@ public class ShooterArm extends SubsystemBase {
   public ShooterArm() {
     this.LMotor = new TalonSRX(this.LMotorID);
     this.RMotor = new TalonSRX(this.RMotorID);
+    LMotor.configureSlot(PID.SlotConfiguration(this.LMotorCfg));
+    RMotor.configureSlot(PID.SlotConfiguration(this.RMotorCfg));
   }
 
   @Override

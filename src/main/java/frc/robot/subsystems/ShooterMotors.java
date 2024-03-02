@@ -4,12 +4,12 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.PID;
 
 public class ShooterMotors extends SubsystemBase {
   /** Creates a new ShooterMotors. */
@@ -17,11 +17,8 @@ public class ShooterMotors extends SubsystemBase {
     shooterMotorLeft = new TalonFX(Constants.ShooterLMoterID);
     shooterMotorRight = new TalonFX(Constants.ShooterRMoterID);
     speed = 0;
-
-    var velocityPIDConfigs = new Slot0Configs();
-    velocityPIDConfigs.kP = 0.05;
-    velocityPIDConfigs.kI = 2;
-    velocityPIDConfigs.kD = 0;
+    var arg = new PID.Profile(0.05, 2, 0);
+    var velocityPIDConfigs = PID.Slot0Configs(arg);
     velocityPIDConfigs.kV = 0;
     // var velocityOutputConfigs = new MotorOutputConfigs();
     // velocityOutputConfigs.NeutralMode = NeutralModeValue.Coast;
@@ -44,7 +41,7 @@ public class ShooterMotors extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     shooterMotorLeft.setControl(m_leftRequest.withOutput(speed));
-    shooterMotorRight.setControl(m_rightRequest.withOutput(speed*-1));
+    shooterMotorRight.setControl(m_rightRequest.withOutput(speed * -1));
   }
 
   public void testBeg() {
