@@ -77,6 +77,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    if (RobotContainer.getTeleopShooterCommand() != null) RobotContainer.getTeleopShooterCommand().schedule();
   }
 
   /** This function is called periodically during operator control. */
