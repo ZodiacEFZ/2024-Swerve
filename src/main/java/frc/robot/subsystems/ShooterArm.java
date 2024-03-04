@@ -29,10 +29,16 @@ public class ShooterArm extends SubsystemBase {
 
   /** Creates a new ShooterArm. */
   public ShooterArm() {
-    this.left.init().setPID(new PID.Profile(0, 0, 0));
-    this.right.init().setPID(new PID.Profile(0, 0, 0));
-    this.regPos("test", new Pos(114, 514))
-        .regPos("another-test", new Pos(514, 114));
+    this.left
+        .init()
+        .set_pid(new PID.Profile(0, 0, 0))
+        .set_ori(2600);
+    this.right
+        .init()
+        .set_pid(new PID.Profile(0, 0, 0))
+        .set_ori(2600);
+    this.reg_pos("test", new Pos(114, 514))
+        .reg_pos("another-test", new Pos(514, 114));
   }
 
   @Override
@@ -59,7 +65,7 @@ public class ShooterArm extends SubsystemBase {
     return this;
   }
 
-  public ShooterArm regPos(String name, Pos pos) {
+  public ShooterArm reg_pos(String name, Pos pos) {
     this.pos.put(name, pos);
     return this;
   }

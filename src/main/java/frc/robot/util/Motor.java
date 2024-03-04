@@ -25,11 +25,11 @@ public class Motor {
     }
 
     /* Converts the desired absolute position to the current relative position. */
-    private double conv(double dest) {
+    private double rel(double abs) {
         // https://v6.docs.ctr-electronics.com/en/2023-v6/docs/migration/migration-guide/closed-loop-guide.html
-        var rel = this.motor.getPosition().getValue();
-        var abs = this.encoder.getSelectedSensorPosition();
-        return rel + (dest - abs) / 2048;
+        var r = this.motor.getPosition().getValue();
+        var a = this.encoder.getSelectedSensorPosition();
+        return r + (abs - a) / 2048;
     }
 
     public Motor init() {
@@ -38,8 +38,13 @@ public class Motor {
         return this;
     }
 
-    public Motor setPID(PID.Profile cfg) {
+    public Motor set_pid(PID.Profile cfg) {
         this.motor.getConfigurator().apply(PID.Slot0Configs(cfg));
+        return this;
+    }
+
+    public Motor set_ori(double origin) {
+        this.origin = origin;
         return this;
     }
 
@@ -60,8 +65,13 @@ public class Motor {
             this.motor.set(0);
             return this;
         }
-        var req = new PositionDutyCycle(conv(this.dest));
+        var req = new PositionDutyCycle(this.rel(this.dest));
         this.motor.setControl(req);
+        return this;
+    }
+
+    public Motor reset() {
+        this.go(this.origin);
         return this;
     }
 }
