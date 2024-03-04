@@ -12,7 +12,7 @@ import frc.robot.util.Motor;
 
 public class ShooterArm extends SubsystemBase {
 
-  private final Motor left = new Motor(114, 514);
+  // private final Motor left = new Motor(114, 514);
   private final Motor right = new Motor(1919, 810);
 
   private class Pos {
@@ -29,10 +29,10 @@ public class ShooterArm extends SubsystemBase {
 
   /** Creates a new ShooterArm. */
   public ShooterArm() {
-    this.left
-        .init()
-        .set_pid(new PID.Profile(0, 0, 0))
-        .set_ori(2600);
+    // this.left
+    // .init()
+    // .set_pid(new PID.Profile(0, 0, 0))
+    // .set_ori(2600);
     this.right
         .init()
         .set_pid(new PID.Profile(0, 0, 0))
@@ -44,12 +44,12 @@ public class ShooterArm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    this.left.run();
+    // this.left.run();
     this.right.run();
   }
 
   public ShooterArm stop() {
-    this.left.stop();
+    // this.left.stop();
     this.right.stop();
     return this;
   }
@@ -57,7 +57,7 @@ public class ShooterArm extends SubsystemBase {
   public ShooterArm go(String pos) {
     var got = this.pos.get(pos);
     if (got != null) {
-      this.left.go(got.L);
+      // this.left.go(got.L);
       this.right.go(got.R);
     } else {
       this.stop();
