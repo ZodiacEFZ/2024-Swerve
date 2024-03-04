@@ -30,9 +30,9 @@ public class ShooterArmCtrl extends Command {
   public void execute() {
     var p = RobotContainer.ctrlJoystick.getRawButton(this.testButton);
     if (p) {
-      this.arm.setPos("test");
+      this.arm.go("test");
     } else {
-      this.arm.setStill();
+      this.arm.stop();
     }
     SmartDashboard.putBoolean("TestShooterArmCtrl", p);
   }

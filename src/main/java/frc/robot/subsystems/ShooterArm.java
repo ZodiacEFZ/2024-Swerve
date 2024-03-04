@@ -6,20 +6,14 @@ package frc.robot.subsystems;
 
 import java.util.HashMap;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PID;
+import frc.robot.Util;
 
 public class ShooterArm extends SubsystemBase {
-  private final int LMotorID = 114;
-  private final int RMotorID = 514;
 
-  private final TalonSRX LMotor;
-  private final TalonSRX RMotor;
-  private final PID.Profile LMotorCfg = new PID.Profile(0, 0, 0);;
-  private final PID.Profile RMotorCfg = new PID.Profile(0, 0, 0);;
+  private final Util.Motor left = new Util.Motor(114, 514).setPID(new PID.Profile(0, 0, 0));
+  private final Util.Motor right = new Util.Motor(1919, 810).setPID(new PID.Profile(0, 0, 0));
 
   private class Pos {
     public double L;
@@ -35,43 +29,39 @@ public class ShooterArm extends SubsystemBase {
 
   /** Creates a new ShooterArm. */
   public ShooterArm() {
-    this.LMotor = new TalonSRX(this.LMotorID);
-    this.RMotor = new TalonSRX(this.RMotorID);
-    this.LMotor.configureSlot(PID.SlotConfiguration(this.LMotorCfg));
-    this.RMotor.configureSlot(PID.SlotConfiguration(this.RMotorCfg));
-    this.LMotor.setInverted(false);
-    this.LMotor.setSensorPhase(false);
-    this.LMotor.setNeutralMode(NeutralMode.Coast);
-    this.RMotor.setInverted(false);
-    this.RMotor.setSensorPhase(false);
-    this.RMotor.setNeutralMode(NeutralMode.Coast);
-    this.pos.put("test", new Pos(114, 514));
+    this.left.init();
+    this.right.init();
+    this.regPos("test", new Pos(114, 514))
+        .regPos("another-test", new Pos(514, 114));
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    this.left.run();
+    this.right.run();
   }
 
-  public ShooterArm setStill() {
-    this.LMotor.set(ControlMode.PercentOutput, 0);
-    this.RMotor.set(ControlMode.PercentOutput, 0);
+  public ShooterArm stop() {
+    this.left.stop();
+    this.right.stop();
     return this;
   }
 
-  public ShooterArm setPos(String pos) {
+  public ShooterArm go(String pos) {
     var got = this.pos.get(pos);
     if (got != null) {
-      this.LMotor.set(ControlMode.Position, got.L);
-      this.RMotor.set(ControlMode.Position, got.R);
+      this.left.go(got.L);
+      this.right.go(got.R);
     } else {
-      this.setStill();
+      this.stop();
     }
     return this;
   }
 
-  public ShooterArm setTestPos() {
-    return this.setPos("test");
+  public ShooterArm regPos(String name, Pos pos) {
+    this.pos.put(name, pos);
+    return this;
   }
 
 }
