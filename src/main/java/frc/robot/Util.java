@@ -33,7 +33,8 @@ public class Util {
         }
 
         private static double conv(double ori) {
-            return ori;
+            // https://v6.docs.ctr-electronics.com/en/2023-v6/docs/migration/migration-guide/closed-loop-guide.html
+            return ori / 2048;
         }
 
         public Motor init() {
