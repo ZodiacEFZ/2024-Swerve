@@ -7,8 +7,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
-import frc.robot.Util;
 import frc.robot.subsystems.ShooterArm;
+import frc.robot.util.Util;
 
 public class ShooterArmCtrl extends Command {
   private final int testButton = 114;

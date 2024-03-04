@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterMotors;
-import frc.robot.Util;
+import frc.robot.util.Util;
 
 public class ShooterCtrl extends Command {
   private final ShooterMotors m_ShooterMotors;

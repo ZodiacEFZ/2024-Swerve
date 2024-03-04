@@ -7,13 +7,13 @@ package frc.robot.subsystems;
 import java.util.HashMap;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.PID;
-import frc.robot.Util;
+import frc.robot.util.PID;
+import frc.robot.util.Motor;
 
 public class ShooterArm extends SubsystemBase {
 
-  private final Util.Motor left = new Util.Motor(114, 514).setPID(new PID.Profile(0, 0, 0));
-  private final Util.Motor right = new Util.Motor(1919, 810).setPID(new PID.Profile(0, 0, 0));
+  private final Motor left = new Motor(114, 514);
+  private final Motor right = new Motor(1919, 810);
 
   private class Pos {
     public double L;
@@ -29,8 +29,8 @@ public class ShooterArm extends SubsystemBase {
 
   /** Creates a new ShooterArm. */
   public ShooterArm() {
-    this.left.init();
-    this.right.init();
+    this.left.init().setPID(new PID.Profile(0, 0, 0));
+    this.right.init().setPID(new PID.Profile(0, 0, 0));
     this.regPos("test", new Pos(114, 514))
         .regPos("another-test", new Pos(514, 114));
   }

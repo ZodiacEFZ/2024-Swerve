@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.util;
 
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix6.configs.Slot0Configs;

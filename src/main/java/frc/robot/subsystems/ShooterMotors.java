@@ -9,7 +9,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.PID;
+import frc.robot.util.PID;
 
 public class ShooterMotors extends SubsystemBase {
   /** Creates a new ShooterMotors. */
