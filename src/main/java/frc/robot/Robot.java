@@ -77,15 +77,23 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+<<<<<<< HEAD
     if (RobotContainer.getTeleopShooterCommand() != null) RobotContainer.getTeleopShooterCommand().schedule();
+=======
+    if (RobotContainer.getTeleopCommand() != null) RobotContainer.getTeleopCommand().schedule();
+>>>>>>> 5770fac59d306fc0ab661a1ace3049beba0e185f
   }
 
   /** This function is called periodically during operator control. */
   @Override
+<<<<<<< HEAD
   public void teleopPeriodic() {
     CommandScheduler.getInstance().schedule(RobotContainer.swerveDrive);
     // CommandScheduler.getInstance().schedule(RobotContainer.sc);
   }
+=======
+  public void teleopPeriodic() {}
+>>>>>>> 5770fac59d306fc0ab661a1ace3049beba0e185f
 
   @Override
   public void testInit() {
