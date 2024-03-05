@@ -11,6 +11,8 @@ import frc.robot.subsystems.IntakeMotors;
 
 public class IntakeCtrl extends Command {
   private final IntakeMotors m_IntakeMotors;
+  private IntakeSubsystem intakeSubsystem;
+  private int targetPosition; 
   /** Creates a new IntakeCtrl. */
   public IntakeCtrl(IntakeMotors intakeMotors) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -20,7 +22,9 @@ public class IntakeCtrl extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    intakeSubsystem.setIntakePosition(targetPosition);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

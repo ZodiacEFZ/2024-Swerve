@@ -1,0 +1,19 @@
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+public class IntakeSubsystem {
+    private TalonSRX talon;
+
+    public IntakeSubsystem(int talonId) {
+        talon = new TalonSRX(talonId);
+        talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+        talonSRX.config_kP(0, 0.1);
+        talonSRX.config_kI(0, 0.0);
+        talonSRX.config_kD(0, 0.0);
+    }
+
+    public void setIntakePosition(int targetPosition) {
+        talon.set(ControlMode.Position, targetPosition);
+    }
+}
