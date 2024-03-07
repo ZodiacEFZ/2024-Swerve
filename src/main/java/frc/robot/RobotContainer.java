@@ -7,9 +7,11 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeCtrl;
 import frc.robot.commands.ShooterCtrl;
 import frc.robot.commands.SwerveDrive;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeMotors;
 import frc.robot.subsystems.ShooterMotors;
 import frc.robot.subsystems.SwerveModule;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -45,7 +47,10 @@ public class RobotContainer {
   public static SwerveDrive swerveDrive = new SwerveDrive(swerveSubsystem);
 
   private static ShooterMotors m_ShooterMotors = new ShooterMotors();
-  private static ShooterCtrl m_ShooterCtrl = new ShooterCtrl(m_ShooterMotors);
+  public static ShooterCtrl m_ShooterCtrl = new ShooterCtrl(m_ShooterMotors);
+
+  private static IntakeMotors m_IntakeMotors = new IntakeMotors();
+  public static IntakeCtrl m_IntakeCtrl = new IntakeCtrl(m_IntakeMotors);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
@@ -117,5 +122,9 @@ public class RobotContainer {
 
   public static Command getTeleopShooterCommand() {
     return m_ShooterCtrl;
+  }
+
+  public static Command getTeleopIntakeCommand() {
+    return m_IntakeCtrl;
   }
 }

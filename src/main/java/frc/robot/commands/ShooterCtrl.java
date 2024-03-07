@@ -32,6 +32,13 @@ public class ShooterCtrl extends Command {
       m_ShooterMotors.allStop();
     }
     SmartDashboard.putBoolean("ShooterButtonPressed", RobotContainer.ctrlJoystick.getRawButton(1));
+    // if (RobotContainer.ctrlJoystick.getRawButtonPressed(5)) {
+    //   m_ShooterMotors.speaker();
+    // }
+    // if (RobotContainer.ctrlJoystick.getRawButtonPressed(6)) {
+    //   m_ShooterMotors.amp();
+    // }
+    // SmartDashboard.getNumber("shooterArmPos", m_ShooterMotors.getArmPos());
   }
 
   // Called once the command ends or is interrupted.

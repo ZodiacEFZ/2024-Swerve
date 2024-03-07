@@ -29,6 +29,6 @@ public final class Constants {
 
   public static final int ShooterLMoterID = 30;
   public static final int ShooterRMoterID = 29;
-  public static final int shooterArmMotorID = 0;
-  public static final int intakeTalonSRXPort = 20, intakeFlipSRXPort = 0;
+  public static final int shooterArmMotorID = 18;
+  public static final int intakeTalonSRXPort = 36, intakeFlipSRXPort = 14;
 }

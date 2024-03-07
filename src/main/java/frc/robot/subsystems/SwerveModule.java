@@ -69,6 +69,7 @@ public class SwerveModule extends SubsystemBase {
   private double kV;
   private int number;
   private double position;
+  private boolean alter;
 
   @Override
   public void periodic() {
@@ -127,12 +128,16 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber("AngleGoal" + number, angleGoal);
     SmartDashboard.putNumber("PositionGoal" + number, positionGoal);
 
-    velocityMotor.setControl(m_velocity.withVelocity(kV * velocityGoal * 10 / 2048));
+    velocityMotor.setControl(m_velocity.withVelocity(kV * velocityGoal * 10 * (alter ? 0.3 : 1) / 2048));
   }
 
   public void setStill() {
     angleMotor.set(0);
     velocityMotor.set(0);
+  }
+
+  public void alter_velo() {
+    alter = !alter;
   }
 }
 

@@ -17,9 +17,9 @@ public class IntakeMotors extends SubsystemBase {
   /** Creates a new IntakeMotors. */
   public IntakeMotors() {
     speed = 0;
-    nowPos = 0;
-    upperPos = 0;
-    lowerPos = 0;
+    upperPos = 1580;
+    lowerPos = 300;
+    nowPos = lowerPos;
 
     intakeTalonSRX = new TalonSRX(Constants.intakeTalonSRXPort);
     intakeTalonSRX.configFactoryDefault();
@@ -31,12 +31,12 @@ public class IntakeMotors extends SubsystemBase {
     intakeTalonSRX.setNeutralMode(NeutralMode.Coast);
 
     intakeFlipSRX = new TalonSRX(Constants.intakeFlipSRXPort);
-    intakeFlipSRX.config_kP(0, 0.1);
+    intakeFlipSRX.config_kP(0, 1);
     intakeFlipSRX.config_kI(0, 0.0001);
     intakeFlipSRX.config_kD(0, 0.1);
     intakeFlipSRX.setInverted(false);
     intakeFlipSRX.setSensorPhase(false);
-    intakeFlipSRX.setNeutralMode(NeutralMode.Brake);
+    intakeFlipSRX.setNeutralMode(NeutralMode.Coast);
     intakeFlipSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
   }
 
@@ -54,11 +54,15 @@ public class IntakeMotors extends SubsystemBase {
   }
 
   public void begIntake() {
-    speed = 0.5;
+    speed = -0.8;
   }
 
   public void stopIntake() {
     speed = 0;
+  }
+
+  public void begSend() {
+    speed = 0.5;
   }
 
   public void up() {

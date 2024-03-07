@@ -10,6 +10,7 @@ import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -40,8 +41,8 @@ public class ShooterMotors extends SubsystemBase {
     positionPIDConfigs.kV = 0;
     shooterArmMotor.getConfigurator().apply(positionPIDConfigs, 0.05);
 
-    restPos = shooterArmMotor.getPosition().getValue(); ampPos = restPos + 2;
-    m_angleRequest = new PositionDutyCycle(restPos);
+    // restPos = shooterArmMotor.getPosition().getValue() + 0.2; ampPos = restPos - 2;
+    m_angleRequest = new DutyCycleOut(0);
   }
 
   private TalonFX shooterMotorLeft;
@@ -53,20 +54,26 @@ public class ShooterMotors extends SubsystemBase {
   private final VelocityDutyCycle m_leftRequest = new VelocityDutyCycle(0.0);
   private final VelocityDutyCycle m_rightRequest = new VelocityDutyCycle(0.0);
 
-  private final PositionDutyCycle m_angleRequest;
+  private final DutyCycleOut m_angleRequest;
   private double restPos, ampPos, nowArmPos;
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    shooterMotorLeft.setControl(m_leftRequest.withVelocity(speed));
-    shooterMotorRight.setControl(m_rightRequest.withVelocity(speed * -1));
+    shooterMotorLeft.setControl(m_leftRequest.withVelocity(speed * -1));
+    shooterMotorRight.setControl(m_rightRequest.withVelocity(speed));
 
-    shooterArmMotor.setControl(m_angleRequest.withPosition(nowArmPos));
+    // shooterArmMotor.setControl(m_angleRequest.withPosition(nowArmPos));
+    shooterArmMotor.setControl(m_angleRequest.withOutput(0));
+
+  }
+
+  public double getArmPos() {
+    return shooterArmMotor.getPosition().getValueAsDouble();
   }
 
   public void testBeg() {
-    speed = 50;
+    speed = 70;
   }
 
   public void allStop() {

@@ -24,7 +24,7 @@ public class SwerveDrive extends Command {
 
   private double x_value, y_value, rot_value;
   private boolean aimmingState = false;
-  private int aimmingOrien = 0;
+  // private int aimmingOrien = 0;
   
   // Called when the command is initially scheduled.
   @Override
@@ -83,7 +83,7 @@ public class SwerveDrive extends Command {
           RobotContainer.driveRumble();
         } else {
           // Current state is false so turn on
-          field_oriented = true;
+          field_oriented = false;
           RobotContainer.driveRumble();
         }
       }
@@ -110,28 +110,7 @@ public class SwerveDrive extends Command {
         if (field_oriented) {
           swerveSubsystem.field_oriented(x_value, y_value, rot_value,
               Math.toRadians(swerveSubsystem.get_field_angle()));
-        } else {
-          if (flag) {
-            double error = targetAngle - swerveSubsystem.get_field_angle();
-            error = -error;
-            if (error > 180)
-              error -= 360;
-            else if (error < -180)
-              error += 360;
-            // error=0;
-            rot_value = error * 0.02;
-            if(rot_value>0.5) rot_value=0.5;
-            if(rot_value<-0.5) rot_value=-0.5;
-            SmartDashboard.putNumber("error", error);
-          }
-          swerveSubsystem.car_oriented(x_value, y_value, rot_value);
-
-          SmartDashboard.putNumber("x_axis", x_value);
-          SmartDashboard.putNumber("y_axis", y_value);
-          SmartDashboard.putNumber("z_axis", rot_value);
-
         }
-
         angleGoal = swerveSubsystem.get_theta();
         velocityGoal = swerveSubsystem.get_velocity();
 
@@ -142,24 +121,17 @@ public class SwerveDrive extends Command {
 
         SmartDashboard.putNumberArray("rawAngleGoal", angleGoal);
 
-        RobotContainer.LeftFrontSwerveModule.setStatus(angleGoal[1], velocityGoal[1]*kv);
-        RobotContainer.RightFrontSwerveModule.setStatus(angleGoal[2], velocityGoal[2]*kv);
-        RobotContainer.RightBackSwerveModule.setStatus(angleGoal[3], velocityGoal[3]*kv);
-        RobotContainer.LeftBackSwerveModule.setStatus(angleGoal[4], velocityGoal[4]*kv);
+        RobotContainer.LeftFrontSwerveModule.setStatus(angleGoal[1], velocityGoal[1]);
+        RobotContainer.RightFrontSwerveModule.setStatus(angleGoal[2], velocityGoal[2]);
+        RobotContainer.RightBackSwerveModule.setStatus(angleGoal[3], velocityGoal[3]);
+        RobotContainer.LeftBackSwerveModule.setStatus(angleGoal[4], velocityGoal[4]);
       }
     }
-    if (aimmingState) {
-      angleGoal = swerveSubsystem.get_theta();
-      velocityGoal = swerveSubsystem.get_velocity();
-
-      for (int i = 1; i <= 4; i++) {
-        angleGoal[i] = (Math.toDegrees(angleGoal[i])) % 360;
-        velocityGoal[i] = 18000 * velocityGoal[i] + 2000;
-      }
-      RobotContainer.LeftFrontSwerveModule.setStatus(angleGoal[1], velocityGoal[1]);
-      RobotContainer.RightFrontSwerveModule.setStatus(angleGoal[2], velocityGoal[2]);
-      RobotContainer.RightBackSwerveModule.setStatus(angleGoal[3], velocityGoal[3]);
-      RobotContainer.LeftBackSwerveModule.setStatus(angleGoal[4], velocityGoal[4]);
+    if (RobotContainer.driveJoystick.getRawButtonPressed(9)) {
+      RobotContainer.LeftBackSwerveModule.alter_velo();
+      RobotContainer.LeftFrontSwerveModule.alter_velo();
+      RobotContainer.RightBackSwerveModule.alter_velo();
+      RobotContainer.RightFrontSwerveModule.alter_velo();
     }
   }
 
