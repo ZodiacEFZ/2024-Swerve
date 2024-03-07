@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveModule extends SubsystemBase {
   /** Creates a new SwerveModule. */
-  public SwerveModule(int number, int aID, int vID, int eID, int zeroPos, boolean inverse) {
+  public SwerveModule(int number, int aID, int vID, int eID, int zeroPos, boolean v_inverse, boolean a_inverse) {
     this.number = number;
     this.zeroPos = zeroPos;
 
@@ -32,7 +32,7 @@ public class SwerveModule extends SubsystemBase {
     velocityPIDConfigs.kV = 0;
     var velocityOutputConfigs = new MotorOutputConfigs();
     velocityOutputConfigs.NeutralMode = NeutralModeValue.Coast;
-    velocityOutputConfigs.Inverted = inverse ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
+    velocityOutputConfigs.Inverted = v_inverse ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
     velocityMotor = new TalonFX(vID);
     velocityMotor.getConfigurator().apply(velocityPIDConfigs, 0.05);
     velocityMotor.getConfigurator().apply(velocityOutputConfigs);
@@ -45,7 +45,7 @@ public class SwerveModule extends SubsystemBase {
     anglePIDConfigs.kV = 0;
     var angleOutputConfigs = new MotorOutputConfigs();
     angleOutputConfigs.NeutralMode = NeutralModeValue.Coast;
-    angleOutputConfigs.Inverted = InvertedValue.Clockwise_Positive;
+    angleOutputConfigs.Inverted = a_inverse ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
     // var EncoderConfigs = new TalonFXConfiguration();
     // EncoderConfigs.Feedback.FeedbackRemoteSensorID = eID;
     // EncoderConfigs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
@@ -127,7 +127,7 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber("AngleGoal" + number, angleGoal);
     SmartDashboard.putNumber("PositionGoal" + number, positionGoal);
 
-    velocityMotor.setControl(m_velocity.withVelocity(kV * velocityGoal * 10 * 0.3 / 2048));
+    velocityMotor.setControl(m_velocity.withVelocity(kV * velocityGoal * 10 / 2048));
   }
 
   public void setStill() {
