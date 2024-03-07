@@ -5,9 +5,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -15,6 +17,9 @@ public class IntakeMotors extends SubsystemBase {
   /** Creates a new IntakeMotors. */
   public IntakeMotors() {
     speed = 0;
+    nowPos = 0;
+    upperPos = 0;
+    lowerPos = 0;
 
     intakeTalonSRX = new TalonSRX(Constants.intakeTalonSRXPort);
     intakeTalonSRX.configFactoryDefault();
@@ -24,15 +29,28 @@ public class IntakeMotors extends SubsystemBase {
     intakeTalonSRX.setInverted(false);
     intakeTalonSRX.setSensorPhase(false);
     intakeTalonSRX.setNeutralMode(NeutralMode.Coast);
+
+    intakeFlipSRX = new TalonSRX(Constants.intakeFlipSRXPort);
+    intakeFlipSRX.config_kP(0, 0.1);
+    intakeFlipSRX.config_kI(0, 0.0001);
+    intakeFlipSRX.config_kD(0, 0.1);
+    intakeFlipSRX.setInverted(false);
+    intakeFlipSRX.setSensorPhase(false);
+    intakeFlipSRX.setNeutralMode(NeutralMode.Brake);
+    intakeFlipSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
   }
 
   private TalonSRX intakeTalonSRX;
+  private TalonSRX intakeFlipSRX;
   private double speed;
+  private double nowPos, upperPos, lowerPos;
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     intakeTalonSRX.set(ControlMode.PercentOutput, speed);
+    intakeFlipSRX.set(ControlMode.Position, nowPos);
+    SmartDashboard.putNumber("intakeFlipSRX_Pos", intakeFlipSRX.getSelectedSensorPosition());
   }
 
   public void begIntake() {
@@ -41,5 +59,13 @@ public class IntakeMotors extends SubsystemBase {
 
   public void stopIntake() {
     speed = 0;
+  }
+
+  public void up() {
+    nowPos = upperPos;
+  }
+
+  public void down() {
+    nowPos = lowerPos;
   }
 }

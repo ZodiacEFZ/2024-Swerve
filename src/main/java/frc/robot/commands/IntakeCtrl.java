@@ -20,7 +20,9 @@ public class IntakeCtrl extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    nowStatus = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -32,7 +34,18 @@ public class IntakeCtrl extends Command {
       m_IntakeMotors.stopIntake();
     }
     SmartDashboard.putBoolean("IntakeButtonPressed", RobotContainer.ctrlJoystick.getRawButton(2));
+    if (RobotContainer.ctrlJoystick.getRawButtonPressed(3)) {
+      m_IntakeMotors.up();
+      nowStatus = true;
+    }
+    if (RobotContainer.ctrlJoystick.getRawButtonPressed(4)) {
+      m_IntakeMotors.down();
+      nowStatus = false;
+    }
+    SmartDashboard.putBoolean("IntakeStatus", nowStatus);
   }
+
+  private boolean nowStatus; //false is down & true is up
 
   // Called once the command ends or is interrupted.
   @Override
