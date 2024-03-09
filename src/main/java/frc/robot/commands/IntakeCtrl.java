@@ -22,6 +22,7 @@ public class IntakeCtrl extends Command {
   @Override
   public void initialize() {
     nowStatus = false;
+    m_IntakeMotors.down();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

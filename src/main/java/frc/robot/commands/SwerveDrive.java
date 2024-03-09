@@ -50,7 +50,7 @@ public class SwerveDrive extends Command {
     // SmartDashboard.putNumber("angle", swerveSubsystem.get_field_angle());
     x_value = RobotContainer.driveJoystick.getRawAxis(0);
     y_value = -RobotContainer.driveJoystick.getRawAxis(1);
-    rot_value = -RobotContainer.driveJoystick.getRawAxis(4);
+    rot_value = -RobotContainer.ctrlJoystick.getRawAxis(4);
 
     if (RobotContainer.driveJoystick.getRawButtonPressed(1)) {
       if (field_oriented) {
@@ -59,13 +59,13 @@ public class SwerveDrive extends Command {
         RobotContainer.driveRumble();
       } else {
         // Current state is false so turn on
-        field_oriented = false;
+        field_oriented = true;
         RobotContainer.driveRumble();
       }
     }
     // field_oriented=false;
     if (!flag) {
-      // targetAngle = swerveSubsystem.get_field_angle();
+      targetAngle = swerveSubsystem.get_field_angle();
     }
     SmartDashboard.putBoolean("field_oriented", field_oriented);
     SmartDashboard.putNumber("targetangle", targetAngle);
@@ -84,8 +84,8 @@ public class SwerveDrive extends Command {
       else
         flag = false;
       if (field_oriented) {
-        // swerveSubsystem.field_oriented(x_value, y_value, rot_value,
-            // Math.toRadians(swerveSubsystem.get_field_angle()));
+        swerveSubsystem.field_oriented(x_value, y_value, rot_value,
+            Math.toRadians(swerveSubsystem.get_field_angle()));
       } else {
         swerveSubsystem.car_oriented(x_value, y_value, rot_value);
       }
@@ -105,7 +105,7 @@ public class SwerveDrive extends Command {
       RobotContainer.LeftBackSwerveModule.setStatus(angleGoal[4], velocityGoal[4]);
     }
 
-    if (RobotContainer.driveJoystick.getRawButtonPressed(9)) {
+    if (RobotContainer.driveJoystick.getRawButtonPressed(2)) {
       RobotContainer.LeftBackSwerveModule.alter_velo();
       RobotContainer.LeftFrontSwerveModule.alter_velo();
       RobotContainer.RightBackSwerveModule.alter_velo();

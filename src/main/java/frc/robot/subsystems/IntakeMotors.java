@@ -17,8 +17,8 @@ public class IntakeMotors extends SubsystemBase {
   /** Creates a new IntakeMotors. */
   public IntakeMotors() {
     speed = 0;
-    upperPos = 2850;
-    lowerPos = 1540;
+    upperPos = 2820;
+    lowerPos = 1520;
     nowPos = lowerPos;
 
     intakeTalonSRX = new TalonSRX(Constants.intakeTalonSRXPort);
