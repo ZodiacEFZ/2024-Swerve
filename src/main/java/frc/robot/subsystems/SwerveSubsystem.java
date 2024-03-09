@@ -13,10 +13,10 @@ import frc.robot.Constants;
 public class SwerveSubsystem extends SubsystemBase {
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() {
-    // pigeon2 = new Pigeon2(Constants.Pegion2_ID);
+    pigeon2 = new Pigeon2(Constants.Pegion2_ID);
   }
 
-  // private Pigeon2 pigeon2;
+  private Pigeon2 pigeon2;
 
   @Override
   public void periodic() {
@@ -104,11 +104,11 @@ public class SwerveSubsystem extends SubsystemBase {
     return velocityGoal;
   }
 
-  // public double get_field_angle() {
-  //   double angle = pigeon2.getYaw().getValue();
-  //   angle = -angle;
-  //   angle = (angle % 360 + 360) % 360;
-  //   SmartDashboard.putNumber("fieldAngle", angle);
-  //   return angle;
-  // }
+  public double get_field_angle() {
+    double angle = pigeon2.getYaw().getValue();
+    angle = angle;
+    angle = (angle % 360 + 360) % 360;
+    SmartDashboard.putNumber("fieldAngle", angle);
+    return angle;
+  }
 }
