@@ -41,8 +41,9 @@ public class ShooterMotors extends SubsystemBase {
     positionPIDConfigs.kV = 0;
     shooterArmMotor.getConfigurator().apply(positionPIDConfigs, 0.05);
 
-    // restPos = shooterArmMotor.getPosition().getValue() + 0.2; ampPos = restPos - 2;
-    m_angleRequest = new DutyCycleOut(0);
+    restPos = shooterArmMotor.getPosition().getValue();
+    ampPos = restPos + 2;
+    m_angleRequest = new PositionDutyCycle(restPos);
   }
 
   private TalonFX shooterMotorLeft;
@@ -54,7 +55,7 @@ public class ShooterMotors extends SubsystemBase {
   private final VelocityDutyCycle m_leftRequest = new VelocityDutyCycle(0.0);
   private final VelocityDutyCycle m_rightRequest = new VelocityDutyCycle(0.0);
 
-  private final DutyCycleOut m_angleRequest;
+  private final PositionDutyCycle m_angleRequest;
   private double restPos, ampPos, nowArmPos;
 
   @Override
@@ -63,8 +64,7 @@ public class ShooterMotors extends SubsystemBase {
     shooterMotorLeft.setControl(m_leftRequest.withVelocity(speed * -1));
     shooterMotorRight.setControl(m_rightRequest.withVelocity(speed));
 
-    // shooterArmMotor.setControl(m_angleRequest.withPosition(nowArmPos));
-    shooterArmMotor.setControl(m_angleRequest.withOutput(0));
+    shooterArmMotor.setControl(m_angleRequest.withPosition(nowArmPos));
 
   }
 
