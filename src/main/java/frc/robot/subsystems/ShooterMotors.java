@@ -4,11 +4,13 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,17 +22,18 @@ public class ShooterMotors extends SubsystemBase {
     shooterMotorLeft = new TalonFX(Constants.ShooterLMoterID);
     shooterMotorRight = new TalonFX(Constants.ShooterRMoterID);
     shooterArmMotor = new TalonFX(Constants.shooterArmMotorID);
-    speed = 0;
+    speed = 70;
+    shooter_run = false;
 
     var velocityPIDConfigs = new Slot0Configs();
     velocityPIDConfigs.kP = 0.05;
     velocityPIDConfigs.kI = 2;
     velocityPIDConfigs.kD = 0;
     velocityPIDConfigs.kV = 0;
-    // var velocityOutputConfigs = new MotorOutputConfigs();
-    // velocityOutputConfigs.NeutralMode = NeutralModeValue.Coast;
-    // velocityOutputConfigs.Inverted = inverse ? InvertedValue.Clockwise_Positive :
-    // InvertedValue.CounterClockwise_Positive;
+    var velocityOutputConfigs = new MotorOutputConfigs();
+    velocityOutputConfigs.NeutralMode = NeutralModeValue.Coast;
+    shooterMotorLeft.getConfigurator().apply(velocityOutputConfigs, 0.05);
+    shooterMotorRight.getConfigurator().apply(velocityOutputConfigs, 0.05);
     shooterMotorLeft.getConfigurator().apply(velocityPIDConfigs, 0.05);
     shooterMotorRight.getConfigurator().apply(velocityPIDConfigs, 0.05);
 
@@ -51,6 +54,7 @@ public class ShooterMotors extends SubsystemBase {
   private TalonFX shooterArmMotor;
 
   private double speed;
+  private boolean shooter_run;
 
   private final VelocityDutyCycle m_leftRequest = new VelocityDutyCycle(0.0);
   private final VelocityDutyCycle m_rightRequest = new VelocityDutyCycle(0.0);
@@ -61,9 +65,13 @@ public class ShooterMotors extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    shooterMotorLeft.setControl(m_leftRequest.withVelocity(speed * -1));
-    shooterMotorRight.setControl(m_rightRequest.withVelocity(speed));
-
+    if (shooter_run) {
+      shooterMotorLeft.setControl(m_leftRequest.withVelocity(speed * -1));
+      shooterMotorRight.setControl(m_rightRequest.withVelocity(speed));
+    } else {
+      shooterMotorLeft.set(0);
+      shooterMotorRight.set(0);
+    }
     shooterArmMotor.setControl(m_angleRequest.withPosition(nowArmPos));
 
   }
@@ -73,11 +81,11 @@ public class ShooterMotors extends SubsystemBase {
   }
 
   public void testBeg() {
-    speed = 70;
+    shooter_run = true;
   }
 
   public void allStop() {
-    speed = 0;
+    shooter_run = false;
   }
 
   public void speaker() {
