@@ -90,7 +90,7 @@ public class ShooterMotors extends SubsystemBase {
     shooter_run = true;
   }
 
-  public void allStop() {
+  public void shootStop() {
     shooter_run = false;
   }
 
