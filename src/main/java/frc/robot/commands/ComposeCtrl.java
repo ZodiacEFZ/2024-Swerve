@@ -22,6 +22,8 @@ public class ComposeCtrl extends Command {
     this.m_IntakeMotors = intakeMotors;
     this.m_ShooterMotors = shooterMotors;
     currentTimestamp = System.currentTimeMillis();
+    addRequirements(m_IntakeMotors);
+    addRequirements(m_ShooterMotors);
   }
 
   // Called when the command is initially scheduled.
