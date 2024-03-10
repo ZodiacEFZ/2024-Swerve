@@ -12,6 +12,7 @@ import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -24,6 +25,7 @@ public class ShooterMotors extends SubsystemBase {
     shooterArmMotor = new TalonFX(Constants.shooterArmMotorID);
     speed = 70;
     shooter_run = false;
+    load_run = false;
 
     var velocityPIDConfigs = new Slot0Configs();
     velocityPIDConfigs.kP = 0.05;
@@ -54,13 +56,15 @@ public class ShooterMotors extends SubsystemBase {
   private TalonFX shooterArmMotor;
 
   private double speed;
-  private boolean shooter_run;
+  private double load_speed = 40;
+  private boolean shooter_run, load_run;
 
   private final VelocityDutyCycle m_leftRequest = new VelocityDutyCycle(0.0);
   private final VelocityDutyCycle m_rightRequest = new VelocityDutyCycle(0.0);
 
   private final PositionDutyCycle m_angleRequest;
-  private double restPos, ampPos, nowArmPos;
+  public double restPos, ampPos;
+  private double nowArmPos;
 
   @Override
   public void periodic() {
@@ -68,24 +72,34 @@ public class ShooterMotors extends SubsystemBase {
     if (shooter_run) {
       shooterMotorLeft.setControl(m_leftRequest.withVelocity(speed * -1));
       shooterMotorRight.setControl(m_rightRequest.withVelocity(speed));
-    } else {
+    } else if(load_run){
+      shooterMotorLeft.setControl(m_leftRequest.withVelocity(load_speed * -1));
+      shooterMotorRight.setControl(m_rightRequest.withVelocity(load_speed));
+    }else {
       shooterMotorLeft.set(0);
       shooterMotorRight.set(0);
     }
     shooterArmMotor.setControl(m_angleRequest.withPosition(nowArmPos));
-
   }
 
   public double getArmPos() {
     return shooterArmMotor.getPosition().getValueAsDouble();
   }
 
-  public void testBeg() {
+  public void shoot() {
     shooter_run = true;
   }
 
   public void allStop() {
     shooter_run = false;
+  }
+
+  public void load() {
+    load_run = true;
+  }
+
+  public void loadStop() {
+    load_run = false;
   }
 
   public void speaker() {

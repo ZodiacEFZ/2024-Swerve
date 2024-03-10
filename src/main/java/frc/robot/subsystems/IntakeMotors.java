@@ -43,7 +43,8 @@ public class IntakeMotors extends SubsystemBase {
   private TalonSRX intakeTalonSRX;
   private TalonSRX intakeFlipSRX;
   private double speed;
-  private double nowPos, upperPos, lowerPos;
+  private double nowPos;
+  public double upperPos, lowerPos;
 
   @Override
   public void periodic() {
@@ -51,6 +52,10 @@ public class IntakeMotors extends SubsystemBase {
     intakeTalonSRX.set(ControlMode.PercentOutput, speed);
     intakeFlipSRX.set(ControlMode.Position, nowPos);
     SmartDashboard.putNumber("intakeFlipSRX_Pos", intakeFlipSRX.getSelectedSensorPosition());
+  }
+
+  public double getPosition(){
+    return intakeFlipSRX.getSelectedSensorPosition();
   }
 
   public void begIntake() {
