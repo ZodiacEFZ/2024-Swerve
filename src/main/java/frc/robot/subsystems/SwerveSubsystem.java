@@ -106,7 +106,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public double get_field_angle() {
     double angle = pigeon2.getYaw().getValue();
-    angle = angle;
     angle = (angle % 360 + 360) % 360;
     SmartDashboard.putNumber("fieldAngle", angle);
     return angle;
