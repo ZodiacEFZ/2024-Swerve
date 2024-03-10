@@ -56,7 +56,7 @@ public class ShooterMotors extends SubsystemBase {
   private TalonFX shooterArmMotor;
 
   private double speed;
-  private double load_speed = 40;
+  private double load_speed = 10;
   private boolean shooter_run, load_run, amp_run;
 
   private final VelocityDutyCycle m_leftRequest = new VelocityDutyCycle(0.0);
@@ -72,7 +72,7 @@ public class ShooterMotors extends SubsystemBase {
     if (shooter_run) {
       shooterMotorLeft.setControl(m_leftRequest.withVelocity(speed * -1));
       shooterMotorRight.setControl(m_rightRequest.withVelocity(speed));
-    } else if(load_run){
+    } else if (load_run) {
       shooterMotorLeft.setControl(m_leftRequest.withVelocity(load_speed * -1));
       shooterMotorRight.setControl(m_rightRequest.withVelocity(load_speed));
     } else if(amp_run){
