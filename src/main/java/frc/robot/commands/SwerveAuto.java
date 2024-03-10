@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix6.Timestamp;
+import com.ctre.phoenix6.Timestamp.TimestampSource;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeMotors;
 import frc.robot.subsystems.ShooterMotors;
@@ -25,11 +28,23 @@ public class SwerveAuto extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_IntakeMotors.up();
+    m_ShooterMotors.speaker();
+  }
+
+  java.sql.Timestamp ts_init = new java.sql.Timestamp(System.currentTimeMillis());
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_IntakeMotors.begSend();
+    m_ShooterMotors.shoot();
+    if (System.currentTimeMillis() - ts_init.getTime() > 2000) {
+      m_IntakeMotors.stopIntake();
+      m_ShooterMotors.shootStop();
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
