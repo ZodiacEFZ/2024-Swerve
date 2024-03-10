@@ -37,17 +37,18 @@ public class ComposeCtrl extends Command {
     ArmMove,
     StandBy,
     Shooting,
-    Loading
+    Loading,
+    ArmUp
   }
 
   private long currentTimestamp = 0;
-  private Shooting_Compose_State speaker_compose = Shooting_Compose_State.StandBy;
+  // private Shooting_Compose_State speaker_compose = Shooting_Compose_State.StandBy;
   private Shooting_Compose_State amp_compose = Shooting_Compose_State.StandBy;
 
-  public void shootSpeaker(){
-    speaker_compose = Shooting_Compose_State.IntakeMove;
-    m_IntakeMotors.up();
-  }
+  // public void shootSpeaker(){
+  //   speaker_compose = Shooting_Compose_State.IntakeMove;
+  //   m_IntakeMotors.up();
+  // }
 
   public void shootAmp(){
     amp_compose = Shooting_Compose_State.IntakeMove;
@@ -57,25 +58,25 @@ public class ComposeCtrl extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      if(RobotContainer.ctrlJoystick.getRawButton(1)){
-        shootSpeaker();
-      }
-      if(RobotContainer.ctrlJoystick.getRawButton(2)){
+      // if(RobotContainer.ctrlJoystick.getRawButton(1)){
+      //   shootSpeaker();
+      // }
+      if(RobotContainer.ctrlJoystick.getRawButton(6)){
         shootAmp();
       }
-      if(speaker_compose == Shooting_Compose_State.IntakeMove){
-        if(m_IntakeMotors.getPosition() == m_IntakeMotors.upperPos){
-            m_ShooterMotors.speaker();
-            speaker_compose = Shooting_Compose_State.ArmMove;
-        }
-      }
-      if(speaker_compose == Shooting_Compose_State.ArmMove){
-        if(m_ShooterMotors.getArmPos() == m_ShooterMotors.restPos){
-          m_IntakeMotors.begSend();
-          m_ShooterMotors.shoot();
-          speaker_compose = Shooting_Compose_State.StandBy;
-        }
-      }
+      // if(speaker_compose == Shooting_Compose_State.IntakeMove){
+      //   if(m_IntakeMotors.getPosition() == m_IntakeMotors.upperPos){
+      //       m_ShooterMotors.speaker();
+      //       speaker_compose = Shooting_Compose_State.ArmMove;
+      //   }
+      // }
+      // if(speaker_compose == Shooting_Compose_State.ArmMove){
+      //   if(m_ShooterMotors.getArmPos() == m_ShooterMotors.restPos){
+      //     m_IntakeMotors.begSend();
+      //     m_ShooterMotors.shoot();
+      //     speaker_compose = Shooting_Compose_State.StandBy;
+      //   }
+      // }
 
       if(amp_compose == Shooting_Compose_State.IntakeMove){
         if(m_IntakeMotors.getPosition() == m_IntakeMotors.upperPos){
@@ -87,7 +88,7 @@ public class ComposeCtrl extends Command {
         if(m_ShooterMotors.getArmPos() == m_ShooterMotors.restPos){
           // TODO Timestamp
           currentTimestamp = System.currentTimeMillis();
-          speaker_compose = Shooting_Compose_State.Loading;
+          amp_compose = Shooting_Compose_State.Loading;
           m_IntakeMotors.begSend();
           m_ShooterMotors.load();
         }
@@ -97,8 +98,13 @@ public class ComposeCtrl extends Command {
         if(nowStamp - currentTimestamp == 100){ // in ms
           m_IntakeMotors.stopIntake();
           m_ShooterMotors.loadStop();
-          m_ShooterMotors.shoot();
-          speaker_compose = Shooting_Compose_State.StandBy;
+          amp_compose = Shooting_Compose_State.Shooting;
+          m_ShooterMotors.amp();
+        }
+      }
+      if(amp_compose == Shooting_Compose_State.ArmUp){
+        if(m_ShooterMotors.getArmPos() == m_ShooterMotors.ampPos){ // in ms
+          amp_compose = Shooting_Compose_State.StandBy;
         }
       }
   }

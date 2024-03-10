@@ -57,7 +57,7 @@ public class ShooterMotors extends SubsystemBase {
 
   private double speed;
   private double load_speed = 40;
-  private boolean shooter_run, load_run;
+  private boolean shooter_run, load_run, amp_run;
 
   private final VelocityDutyCycle m_leftRequest = new VelocityDutyCycle(0.0);
   private final VelocityDutyCycle m_rightRequest = new VelocityDutyCycle(0.0);
@@ -75,6 +75,9 @@ public class ShooterMotors extends SubsystemBase {
     } else if(load_run){
       shooterMotorLeft.setControl(m_leftRequest.withVelocity(load_speed * -1));
       shooterMotorRight.setControl(m_rightRequest.withVelocity(load_speed));
+    } else if(amp_run){
+      shooterMotorLeft.setControl(m_leftRequest.withVelocity(load_speed));
+      shooterMotorRight.setControl(m_rightRequest.withVelocity(load_speed * -1));
     }else {
       shooterMotorLeft.set(0);
       shooterMotorRight.set(0);
@@ -86,11 +89,24 @@ public class ShooterMotors extends SubsystemBase {
     return shooterArmMotor.getPosition().getValueAsDouble();
   }
 
-  public void shoot() {
+  public void shoot(){
+    if(getArmPos() == restPos){
+      shooter_run = true;
+    } else if(getArmPos() == ampPos){
+      amp_run = true;
+    }
+  }
+
+  public void shootStop(){
+    shooter_run = false;
+    amp_run = false;
+  }
+
+  public void shootSpeaker() {
     shooter_run = true;
   }
 
-  public void shootStop() {
+  public void shootSpeakerStop() {
     shooter_run = false;
   }
 
@@ -108,5 +124,13 @@ public class ShooterMotors extends SubsystemBase {
 
   public void amp() {
     nowArmPos = ampPos;
+  }
+
+  public void ampShoot(){
+    amp_run = true;
+  }
+
+  public void ampStop(){
+    amp_run = false;
   }
 }

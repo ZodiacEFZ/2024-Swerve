@@ -27,20 +27,21 @@ public class ShooterCtrl extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (RobotContainer.ctrlJoystick.getRawButton(1)) {
-    //   m_ShooterMotors.testBeg();
-    // }
-    // if (RobotContainer.ctrlJoystick.getRawButtonReleased(1)) {
-    //   m_ShooterMotors.allStop();
-    // }
+    if (RobotContainer.ctrlJoystick.getRawButton(1)) {
+      m_ShooterMotors.shoot();
+    }
+    if (RobotContainer.ctrlJoystick.getRawButtonReleased(1)) {
+      m_ShooterMotors.shootStop();
+    }
     SmartDashboard.putBoolean("ShooterButtonPressed", RobotContainer.ctrlJoystick.getRawButton(1));
     // if (RobotContainer.ctrlJoystick.getRawButtonPressed(5)) {
     //   m_ShooterMotors.speaker();
     // }
-    if (RobotContainer.ctrlJoystick.getRawButtonPressed(6)) {
-      m_ShooterMotors.amp();
-    }
+    // if (RobotContainer.ctrlJoystick.getRawButtonPressed(6)) {
+    //   m_ShooterMotors.amp();
+    // }
     SmartDashboard.getNumber("shooterArmPos", m_ShooterMotors.getArmPos());
+
   }
 
   // Called once the command ends or is interrupted.
