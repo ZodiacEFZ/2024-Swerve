@@ -31,10 +31,10 @@ public class IntakeCtrl extends Command {
     if (RobotContainer.ctrlJoystick.getRawButton(2)) {
       m_IntakeMotors.begIntake();
     }
-    if (RobotContainer.ctrlJoystick.getRawButton(1)) {
+    if (RobotContainer.ctrlJoystick.getRawButton(1) || RobotContainer.ctrlJoystick.getPOV() == 90) {
       m_IntakeMotors.begSend();
     }
-    if (!RobotContainer.ctrlJoystick.getRawButton(2) && !RobotContainer.ctrlJoystick.getRawButton(1)) {
+    if (!RobotContainer.ctrlJoystick.getRawButton(2) && !RobotContainer.ctrlJoystick.getRawButton(1) && RobotContainer.ctrlJoystick.getPOV() == -1) {
       m_IntakeMotors.stopIntake();
     }
     SmartDashboard.putBoolean("IntakeButtonPressed", RobotContainer.ctrlJoystick.getRawButton(2));

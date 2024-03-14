@@ -28,20 +28,29 @@ public class ShooterCtrl extends Command {
   @Override
   public void execute() {
     if (RobotContainer.ctrlJoystick.getRawButton(1)) {
-      m_ShooterMotors.shoot();
+      m_ShooterMotors.shootSpeaker();
     }
     if (RobotContainer.ctrlJoystick.getRawButtonReleased(1)) {
-      m_ShooterMotors.shootStop();
+      m_ShooterMotors.shootSpeakerStop();
     }
     SmartDashboard.putBoolean("ShooterButtonPressed", RobotContainer.ctrlJoystick.getRawButton(1));
-    // if (RobotContainer.ctrlJoystick.getRawButtonPressed(5)) {
-    //   m_ShooterMotors.speaker();
-    // }
-    // if (RobotContainer.ctrlJoystick.getRawButtonPressed(6)) {
-    //   m_ShooterMotors.amp();
-    // }
+    if (RobotContainer.ctrlJoystick.getRawButtonPressed(5)) {
+      m_ShooterMotors.speaker();
+    }
+    if (RobotContainer.ctrlJoystick.getRawButtonPressed(6)) {
+      m_ShooterMotors.amp();
+    }
     SmartDashboard.getNumber("shooterArmPos", m_ShooterMotors.getArmPos());
-
+    if (RobotContainer.ctrlJoystick.getPOV() == 90) {
+      m_ShooterMotors.load();
+    }
+    if (RobotContainer.ctrlJoystick.getPOV() == -1) {
+      m_ShooterMotors.loadStop();
+      m_ShooterMotors.ampStop();
+    }
+    if (RobotContainer.ctrlJoystick.getPOV() == 270) {
+      m_ShooterMotors.ampShoot();
+    }
   }
 
   // Called once the command ends or is interrupted.

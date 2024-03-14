@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Auto;
 // import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCtrl;
@@ -39,7 +40,7 @@ public class RobotContainer {
   public static SwerveModule LeftFrontSwerveModule = new SwerveModule(1, Constants.LFa, Constants.LFv, Constants.LFe,
       Constants.LF0, true, true); // (number, angleMotorPort, velocityMotorPort, zeroPosition)
   public static SwerveModule RightFrontSwerveModule = new SwerveModule(2, Constants.RFa, Constants.RFv, Constants.RFe,
-      Constants.RF0, false, false);
+      Constants.RF0, true, false);
   public static SwerveModule RightBackSwerveModule = new SwerveModule(3, Constants.RBa, Constants.RBv, Constants.RBe,
       Constants.RB0, true, true);
   public static SwerveModule LeftBackSwerveModule = new SwerveModule(4, Constants.LBa, Constants.LBv, Constants.LBe,
@@ -51,6 +52,8 @@ public class RobotContainer {
 
   private static IntakeMotors m_IntakeMotors = new IntakeMotors();
   public static IntakeCtrl m_IntakeCtrl = new IntakeCtrl(m_IntakeMotors);
+
+  public static Auto m_Auto = new Auto(swerveSubsystem, m_ShooterMotors, m_IntakeMotors);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
@@ -118,6 +121,10 @@ public class RobotContainer {
   // public Command getAutonomousCommand() {
   //   return Autos.exampleAuto(m_exampleSubsystem);
   // }
+
+  public static Command getAutoCommand() {
+    return m_Auto;
+  }
 
   public static Command getTeleopShooterCommand() {
     return m_ShooterCtrl;

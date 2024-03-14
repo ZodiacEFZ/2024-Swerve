@@ -50,7 +50,7 @@ public class SwerveDrive extends Command {
     // SmartDashboard.putNumber("angle", swerveSubsystem.get_field_angle());
     x_value = RobotContainer.driveJoystick.getRawAxis(0);
     y_value = -RobotContainer.driveJoystick.getRawAxis(1);
-    rot_value = -RobotContainer.ctrlJoystick.getRawAxis(4);
+    rot_value = -RobotContainer.ctrlJoystick.getRawAxis(0);
 
     if (RobotContainer.driveJoystick.getRawButtonPressed(1)) {
       if (field_oriented) {

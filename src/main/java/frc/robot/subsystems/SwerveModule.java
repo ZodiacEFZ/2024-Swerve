@@ -69,7 +69,7 @@ public class SwerveModule extends SubsystemBase {
   private double kV;
   private int number;
   private double position;
-  private boolean alter;
+  private boolean alter = true;
 
   @Override
   public void periodic() {
@@ -117,7 +117,7 @@ public class SwerveModule extends SubsystemBase {
       // angleMotor.setControl(m_angle.withVelocity(0.1 * kV * (positionGoal - position)));
     // }
 
-    angleMotor.set(Math.min((positionGoal - position) * 0.001, 0.3));
+    angleMotor.set(Math.min((positionGoal - position) * 0.001, 0.5));
 
     // angleMotor.setControl(m_angle.withPosition((positionGoal - position) * 10 / 2048));
     // angleMotor.setControl(m_angle.withPosition(zeroPos * 10 / 2048));
