@@ -64,7 +64,7 @@ public class Auto extends Command {
         break;
       case ShootPreload:
         m_SwerveSubsystem.car_oriented(0, 0, 0.3 * direction);
-        if (System.currentTimeMillis() - ts_init.getTime() > 2000) {
+        if (System.currentTimeMillis() - ts_init.getTime() > 1250) {
           m_SwerveSubsystem.car_oriented(0, 0, 0);
           shootPreload();
           auto_state = Auto_State.ShootingStop;
@@ -84,7 +84,7 @@ public class Auto extends Command {
         break;
       case TurnBeg:
         m_SwerveSubsystem.car_oriented(0, 0, -0.2 * direction);
-        if (System.currentTimeMillis() - ts_init.getTime() > 2000) {
+        if (System.currentTimeMillis() - ts_init.getTime() > 1250) {
           ts_init = new java.sql.Timestamp(System.currentTimeMillis());
           auto_state = Auto_State.TurnEnd;
         }
@@ -122,7 +122,7 @@ public class Auto extends Command {
     RobotContainer.LeftFrontSwerveModule.setStatus(angleGoal[1], velocityGoal[1]);
     RobotContainer.RightFrontSwerveModule.setStatus(angleGoal[2], velocityGoal[2]);
     RobotContainer.RightBackSwerveModule.setStatus(angleGoal[3], velocityGoal[3]);
-    RobotContainer.LeftBackSwerveModule.setStatus(angleGoal[4], velocityGoal[4]);
+    RobotContainer.LeftBackSwerveModule.setStatus(angleGoal[4], velocityGoal[4]*0.86);
   }
 
   private double[] angleGoal = new double[8], velocityGoal = new double[8];

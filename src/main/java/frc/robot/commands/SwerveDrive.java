@@ -102,7 +102,7 @@ public class SwerveDrive extends Command {
       RobotContainer.LeftFrontSwerveModule.setStatus(angleGoal[1], velocityGoal[1]);
       RobotContainer.RightFrontSwerveModule.setStatus(angleGoal[2], velocityGoal[2]);
       RobotContainer.RightBackSwerveModule.setStatus(angleGoal[3], velocityGoal[3]);
-      RobotContainer.LeftBackSwerveModule.setStatus(angleGoal[4], velocityGoal[4]);
+      RobotContainer.LeftBackSwerveModule.setStatus(angleGoal[4], velocityGoal[4]*0.86);
     }
 
     if (RobotContainer.driveJoystick.getRawButtonPressed(2)) {

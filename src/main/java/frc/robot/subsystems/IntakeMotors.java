@@ -17,7 +17,7 @@ public class IntakeMotors extends SubsystemBase {
   /** Creates a new IntakeMotors. */
   public IntakeMotors() {
     speed = 0;
-    upperPos = 3970;
+    upperPos = 3950;
     lowerPos = 2520;
     nowPos = lowerPos;
 

@@ -23,7 +23,7 @@ public final class Constants {
 
   public static final int Pegion2_ID = 0;
   public static final int LFa = 2, LFv = 3, LFe = 1, LF0 = -537;
-  public static final int RFa = 11, RFv = 10, RFe = 4, RF0 = 7721;
+  public static final int RFa = 11, RFv = 10, RFe = 4, RF0 = 1009;
   public static final int RBa = 12, RBv = 8, RBe = 7, RB0 = -5826;
   public static final int LBa = 6, LBv = 5, LBe = 9, LB0 = 2232;
 
