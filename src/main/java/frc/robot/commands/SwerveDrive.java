@@ -123,4 +123,12 @@ public class SwerveDrive extends Command {
   public boolean isFinished() {
     return false;
   }
+
+  private double max_db(double a, double b) {
+    if (a > b) {
+      return a;
+    } else {
+      return b;
+    }
+  }
 }

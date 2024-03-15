@@ -39,7 +39,7 @@ public class SwerveModule extends SubsystemBase {
 
     // angleMotor.getConfigurator().apply(new TalonFXConfiguration());
     var anglePIDConfigs = new Slot0Configs();
-    anglePIDConfigs.kP = 19.22;
+    anglePIDConfigs.kP = 11.45;
     anglePIDConfigs.kI = 0;
     anglePIDConfigs.kD = 0;
     anglePIDConfigs.kV = 0;

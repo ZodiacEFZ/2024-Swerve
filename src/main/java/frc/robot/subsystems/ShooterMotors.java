@@ -23,7 +23,7 @@ public class ShooterMotors extends SubsystemBase {
     shooterMotorLeft = new TalonFX(Constants.ShooterLMoterID);
     shooterMotorRight = new TalonFX(Constants.ShooterRMoterID);
     shooterArmMotor = new TalonFX(Constants.shooterArmMotorID);
-    speed = 70;
+    speed = 100;
     shooter_run = false;
     load_run = false;
 
@@ -47,7 +47,7 @@ public class ShooterMotors extends SubsystemBase {
     shooterArmMotor.getConfigurator().apply(positionPIDConfigs, 0.05);
 
     restPos = shooterArmMotor.getPosition().getValue();
-    ampPos = restPos + 2;
+    ampPos = restPos + 1.5;
     m_angleRequest = new PositionDutyCycle(restPos);
   }
 

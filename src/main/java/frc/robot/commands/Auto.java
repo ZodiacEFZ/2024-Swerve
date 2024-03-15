@@ -28,8 +28,10 @@ public class Auto extends Command {
   private final ShooterMotors m_ShooterMotors;
   private final IntakeMotors m_IntakeMotors;
 
+  private final int direction = 1; // 1 or -1
+
   private enum Auto_State {
-    ShootPreload, ShootingStop, Interval, TurnBeg, TurnEnd, TaxiAndIntakeBeg, TaxiAndIntakeEnd
+    TurnPreload, ShootPreload, ShootingStop, Interval, TurnBeg, TurnEnd, TaxiAndIntakeBeg, TaxiAndIntakeEnd
   }
 
   private Auto_State auto_state;
@@ -53,8 +55,13 @@ public class Auto extends Command {
   public void execute() {
     SmartDashboard.putNumber("auto_state", auto_state.ordinal());
     switch (auto_state) {
+      case TurnPreload:
+        m_SwerveSubsystem.car_oriented(0, 0, 0.2 * direction);
+        auto_state = Auto_State.ShootPreload;
+        break;
       case ShootPreload:
         if (System.currentTimeMillis() - ts_init.getTime() > 2000) {
+          m_SwerveSubsystem.car_oriented(0, 0, 0);
           shootPreload();
           auto_state = Auto_State.ShootingStop;
         }
@@ -72,10 +79,10 @@ public class Auto extends Command {
         }
         break;
       case TurnBeg:
-        m_SwerveSubsystem.car_oriented(0, 0, -0.2);
+        // m_SwerveSubsystem.car_oriented(0, 0, -0.2);
         if (System.currentTimeMillis() - ts_init.getTime() > 2400) {
           ts_init = new java.sql.Timestamp(System.currentTimeMillis());
-          m_SwerveSubsystem.car_oriented(0, 0, 0);
+          m_SwerveSubsystem.car_oriented(0, 0, -0.2 * direction);
           auto_state = Auto_State.TurnEnd;
         }
         break;
@@ -90,7 +97,7 @@ public class Auto extends Command {
         m_SwerveSubsystem.car_oriented(0, 0.3, 0);
         if (System.currentTimeMillis() - ts_init.getTime() > 3000) {
           m_SwerveSubsystem.car_oriented(0, 0, 0);
-          m_IntakeMotors.stopIntake();
+          // m_IntakeMotors.stopIntake();
           auto_state = Auto_State.TaxiAndIntakeEnd;
         }
         break;

@@ -23,9 +23,9 @@ public final class Constants {
 
   public static final int Pegion2_ID = 0;
   public static final int LFa = 2, LFv = 3, LFe = 1, LF0 = 3566;
-  public static final int RFa = 11, RFv = 10, RFe = 4, RF0 = -6918;
-  public static final int RBa = 12, RBv = 8, RBe = 7, RB0 = -3417;
-  public static final int LBa = 6, LBv = 5, LBe = 9, LB0 = 8321;
+  public static final int RFa = 11, RFv = 10, RFe = 4, RF0 = 13;
+  public static final int RBa = 12, RBv = 8, RBe = 7, RB0 = -1515;
+  public static final int LBa = 6, LBv = 5, LBe = 9, LB0 = 2230;
 
   public static final int ShooterLMoterID = 30;
   public static final int ShooterRMoterID = 29;
