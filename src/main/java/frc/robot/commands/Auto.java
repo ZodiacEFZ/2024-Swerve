@@ -51,7 +51,7 @@ public class Auto extends Command {
 
   java.sql.Timestamp ts_init;
 
-  private final boolean noAuto = false;
+  private final boolean noAuto = true;
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

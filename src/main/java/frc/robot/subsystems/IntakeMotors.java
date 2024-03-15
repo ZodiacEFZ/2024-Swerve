@@ -49,8 +49,8 @@ public class IntakeMotors extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    intakeTalonSRX.set(ControlMode.PercentOutput, speed);
-    intakeFlipSRX.set(ControlMode.Position, nowPos);
+    // intakeTalonSRX.set(ControlMode.PercentOutput, speed);
+    // intakeFlipSRX.set(ControlMode.Position, nowPos);
     SmartDashboard.putNumber("intakeFlipSRX_Pos", intakeFlipSRX.getSelectedSensorPosition());
   }
 
