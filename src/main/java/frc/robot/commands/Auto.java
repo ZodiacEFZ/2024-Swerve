@@ -28,7 +28,7 @@ public class Auto extends Command {
   private final ShooterMotors m_ShooterMotors;
   private final IntakeMotors m_IntakeMotors;
 
-  private final int direction = 1; // 1 or -1
+  private final int direction = -1; // 1 or -1
 
   private enum Auto_State {
     TurnPreload, ShootPreload, ShootingStop, Interval, TurnBeg, TurnEnd, TaxiAndIntakeBeg, TaxiAndIntakeEnd
@@ -39,6 +39,7 @@ public class Auto extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    if(noAuto) return;
     auto_state = Auto_State.ShootPreload;
     m_IntakeMotors.up();
     ts_init = new java.sql.Timestamp(System.currentTimeMillis());
@@ -50,16 +51,19 @@ public class Auto extends Command {
 
   java.sql.Timestamp ts_init;
 
+  private final boolean noAuto = false;
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     SmartDashboard.putNumber("auto_state", auto_state.ordinal());
+    if(noAuto) return;
     switch (auto_state) {
       case TurnPreload:
-        m_SwerveSubsystem.car_oriented(0, 0, 0.2 * direction);
         auto_state = Auto_State.ShootPreload;
         break;
       case ShootPreload:
+        m_SwerveSubsystem.car_oriented(0, 0, 0.3 * direction);
         if (System.currentTimeMillis() - ts_init.getTime() > 2000) {
           m_SwerveSubsystem.car_oriented(0, 0, 0);
           shootPreload();
@@ -79,27 +83,27 @@ public class Auto extends Command {
         }
         break;
       case TurnBeg:
-        // m_SwerveSubsystem.car_oriented(0, 0, -0.2);
-        if (System.currentTimeMillis() - ts_init.getTime() > 2400) {
+        m_SwerveSubsystem.car_oriented(0, 0, -0.2 * direction);
+        if (System.currentTimeMillis() - ts_init.getTime() > 2000) {
           ts_init = new java.sql.Timestamp(System.currentTimeMillis());
-          m_SwerveSubsystem.car_oriented(0, 0, -0.2 * direction);
           auto_state = Auto_State.TurnEnd;
         }
         break;
       case TurnEnd:
-        if (System.currentTimeMillis() - ts_init.getTime() > 1000) {
-          ts_init = new java.sql.Timestamp(System.currentTimeMillis());
-          TaxiAndIntakeBeg();
-          auto_state = Auto_State.TaxiAndIntakeBeg;
-        }
+        m_SwerveSubsystem.car_oriented(0, 0, 0);
+        // if (System.currentTimeMillis() - ts_init.getTime() > 1000) {
+        //   ts_init = new java.sql.Timestamp(System.currentTimeMillis());
+        //   TaxiAndIntakeBeg();
+        //   auto_state = Auto_State.TaxiAndIntakeBeg;
+        // }
         break;
       case TaxiAndIntakeBeg:
-        m_SwerveSubsystem.car_oriented(0, 0.3, 0);
-        if (System.currentTimeMillis() - ts_init.getTime() > 3000) {
-          m_SwerveSubsystem.car_oriented(0, 0, 0);
-          // m_IntakeMotors.stopIntake();
-          auto_state = Auto_State.TaxiAndIntakeEnd;
-        }
+        // m_SwerveSubsystem.car_oriented(0, 0.3, 0);
+        // if (System.currentTimeMillis() - ts_init.getTime() > 3000) {
+        //   m_SwerveSubsystem.car_oriented(0, 0, 0);
+        //   // m_IntakeMotors.stopIntake();
+        //   auto_state = Auto_State.TaxiAndIntakeEnd;
+        // }
         break;
       case TaxiAndIntakeEnd:
         break;

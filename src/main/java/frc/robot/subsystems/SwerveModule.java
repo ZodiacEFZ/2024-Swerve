@@ -69,7 +69,7 @@ public class SwerveModule extends SubsystemBase {
   private double kV;
   private int number;
   private double position;
-  private boolean alter = true;
+  private boolean alter = false;
 
   @Override
   public void periodic() {

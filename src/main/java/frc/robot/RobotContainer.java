@@ -40,7 +40,7 @@ public class RobotContainer {
   public static SwerveModule LeftFrontSwerveModule = new SwerveModule(1, Constants.LFa, Constants.LFv, Constants.LFe,
       Constants.LF0, true, true); // (number, angleMotorPort, velocityMotorPort, zeroPosition)
   public static SwerveModule RightFrontSwerveModule = new SwerveModule(2, Constants.RFa, Constants.RFv, Constants.RFe,
-      Constants.RF0, true, false);
+      Constants.RF0, false, false);
   public static SwerveModule RightBackSwerveModule = new SwerveModule(3, Constants.RBa, Constants.RBv, Constants.RBe,
       Constants.RB0, false, true);
   public static SwerveModule LeftBackSwerveModule = new SwerveModule(4, Constants.LBa, Constants.LBv, Constants.LBe,

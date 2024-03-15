@@ -61,9 +61,9 @@ public class ComposeCtrl extends Command {
       // if(RobotContainer.ctrlJoystick.getRawButton(1)){
       //   shootSpeaker();
       // }
-      if(RobotContainer.ctrlJoystick.getRawButton(6)){
-        shootAmp();
-      }
+      // if(RobotContainer.ctrlJoystick.getRawButton(6)){
+        // shootAmp();
+      // }
       // if(speaker_compose == Shooting_Compose_State.IntakeMove){
       //   if(m_IntakeMotors.getPosition() == m_IntakeMotors.upperPos){
       //       m_ShooterMotors.speaker();
@@ -78,35 +78,35 @@ public class ComposeCtrl extends Command {
       //   }
       // }
 
-      if(amp_compose == Shooting_Compose_State.IntakeMove){
-        if(m_IntakeMotors.getPosition() == m_IntakeMotors.upperPos){
-            m_ShooterMotors.speaker();
-            amp_compose = Shooting_Compose_State.ArmMove;
-        }
-      }
-      if(amp_compose == Shooting_Compose_State.ArmMove){
-        if(m_ShooterMotors.getArmPos() == m_ShooterMotors.restPos){
-          // TODO Timestamp
-          currentTimestamp = System.currentTimeMillis();
-          amp_compose = Shooting_Compose_State.Loading;
-          m_IntakeMotors.begSend();
-          m_ShooterMotors.load();
-        }
-      }
-      if(amp_compose == Shooting_Compose_State.Loading){
-        long nowStamp = System.currentTimeMillis();
-        if(nowStamp - currentTimestamp == 100){ // in ms
-          m_IntakeMotors.stopIntake();
-          m_ShooterMotors.loadStop();
-          amp_compose = Shooting_Compose_State.Shooting;
-          m_ShooterMotors.amp();
-        }
-      }
-      if(amp_compose == Shooting_Compose_State.ArmUp){
-        if(m_ShooterMotors.getArmPos() == m_ShooterMotors.ampPos){ // in ms
-          amp_compose = Shooting_Compose_State.StandBy;
-        }
-      }
+      // if(amp_compose == Shooting_Compose_State.IntakeMove){
+      //   if(m_IntakeMotors.getPosition() == m_IntakeMotors.upperPos){
+      //       m_ShooterMotors.speaker();
+      //       amp_compose = Shooting_Compose_State.ArmMove;
+      //   }
+      // }
+      // if(amp_compose == Shooting_Compose_State.ArmMove){
+      //   if(m_ShooterMotors.getArmPos() == m_ShooterMotors.restPos){
+      //     // TODO Timestamp
+      //     currentTimestamp = System.currentTimeMillis();
+      //     amp_compose = Shooting_Compose_State.Loading;
+      //     m_IntakeMotors.begSend();
+      //     m_ShooterMotors.load();
+      //   }
+      // }
+      // if(amp_compose == Shooting_Compose_State.Loading){
+      //   long nowStamp = System.currentTimeMillis();
+      //   if(nowStamp - currentTimestamp == 100){ // in ms
+      //     m_IntakeMotors.stopIntake();
+      //     m_ShooterMotors.loadStop();
+      //     amp_compose = Shooting_Compose_State.Shooting;
+      //     m_ShooterMotors.amp();
+      //   }
+      // }
+      // if(amp_compose == Shooting_Compose_State.ArmUp){
+      //   if(m_ShooterMotors.getArmPos() == m_ShooterMotors.ampPos){ // in ms
+      //     amp_compose = Shooting_Compose_State.StandBy;
+      //   }
+      // }
   }
 
   // Called once the command ends or is interrupted.

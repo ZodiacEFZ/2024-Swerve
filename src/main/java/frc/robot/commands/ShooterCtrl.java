@@ -34,12 +34,12 @@ public class ShooterCtrl extends Command {
       m_ShooterMotors.shootSpeakerStop();
     }
     SmartDashboard.putBoolean("ShooterButtonPressed", RobotContainer.ctrlJoystick.getRawButton(1));
-    if (RobotContainer.ctrlJoystick.getRawButtonPressed(5)) {
-      m_ShooterMotors.speaker();
-    }
-    if (RobotContainer.ctrlJoystick.getRawButtonPressed(6)) {
-      m_ShooterMotors.amp();
-    }
+    // if (RobotContainer.ctrlJoystick.getRawButtonPressed(5)) {
+      // m_ShooterMotors.speaker();
+    // }
+    // if (RobotContainer.ctrlJoystick.getRawButtonPressed(6)) {
+      // m_ShooterMotors.amp();
+    // }
     SmartDashboard.getNumber("shooterArmPos", m_ShooterMotors.getArmPos());
     if (RobotContainer.ctrlJoystick.getPOV() == 90) {
       m_ShooterMotors.load();

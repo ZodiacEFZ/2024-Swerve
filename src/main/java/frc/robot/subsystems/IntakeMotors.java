@@ -17,7 +17,7 @@ public class IntakeMotors extends SubsystemBase {
   /** Creates a new IntakeMotors. */
   public IntakeMotors() {
     speed = 0;
-    upperPos = 3820;
+    upperPos = 3970;
     lowerPos = 2520;
     nowPos = lowerPos;
 
@@ -67,7 +67,7 @@ public class IntakeMotors extends SubsystemBase {
   }
 
   public void begSend() {
-    speed = 0.5;
+    speed = 0.4;
   }
 
   public void up() {
